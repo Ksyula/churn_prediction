@@ -1,5 +1,5 @@
-import urllib.request
 import os.path as op
+import urllib.request
 
 root_path = op.dirname(op.dirname(op.dirname(op.abspath(__file__))))
 

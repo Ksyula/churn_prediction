@@ -1,6 +1,7 @@
-import pandas as pd
-import numpy as np
 import os.path as op
+
+import numpy as np
+import pandas as pd
 
 binary_dict = {'Yes': 1, 'No': 0}
 gender_dict = {'Female': 1, 'Male': 0}
@@ -80,10 +81,14 @@ class Dataprocesser():
         df = self.convert_categorical_to_binary(df)
         df = self.convert_gender_to_binary(df)
         df = self.convert_categorical_to_dummies(df)
-        df.set_index(self.index, inplace=True)
         self.write_processed_dataset(df)
 
     def write_processed_dataset(self, df: pd.DataFrame):
+        """
+        write dataframe to local path
+        :param df: pd.DataFrame
+        featureset
+        """
         df.to_csv(self.data_processed_path, index=False)
 
 
