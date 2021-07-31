@@ -2,7 +2,9 @@
     "input_url": "https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv",
     "raw_data_path": "data/raw/Telco-Customer-Churn.csv",
     "data_processed_path": "data/processed/featureset.csv",
+    "figures_path": "reports/figures/loss_evolution.png",
+    "evaluation_report": "reports/evaluation_report",
+    "model_path": "models/churn_classifier",
     "train_size": 0.8,
     "random_state": 42
-
 }

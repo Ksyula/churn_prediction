@@ -3,15 +3,16 @@ import os.path as op
 import numpy as np
 import pandas as pd
 
-binary_dict = {'Yes': 1, 'No': 0}
-gender_dict = {'Female': 1, 'Male': 0}
+binary_dict = {"Yes": 1, "No": 0}
+gender_dict = {"Female": 1, "Male": 0}
 root_path = op.dirname(op.dirname(op.dirname(op.abspath(__file__))))
 
 
-class Dataprocesser():
+class Dataprocesser:
     """
     class for processing a raw dataset to a precessed data for model training
     """
+
     def __init__(self, raw_data_path: str, data_processed_path: str):
         """
         initiate Data processing object to convert raw data to processed data
@@ -20,10 +21,25 @@ class Dataprocesser():
         """
         self.raw_data_path = op.join(root_path, raw_data_path)
         self.data_processed_path = op.join(root_path, data_processed_path)
-        self.yes_no_cols = ["PaperlessBilling", "PhoneService", "Dependents", "Partner", "Churn"]
-        self.categorical_cols = ['MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup',
-                                 'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies',
-                                 'Contract', 'PaymentMethod']
+        self.yes_no_cols = [
+            "PaperlessBilling",
+            "PhoneService",
+            "Dependents",
+            "Partner",
+            "Churn",
+        ]
+        self.categorical_cols = [
+            "MultipleLines",
+            "InternetService",
+            "OnlineSecurity",
+            "OnlineBackup",
+            "DeviceProtection",
+            "TechSupport",
+            "StreamingTV",
+            "StreamingMovies",
+            "Contract",
+            "PaymentMethod",
+        ]
         self.imputation_cols = "TotalCharges"
         self.gender = "gender"
         self.index = "customerID"
@@ -41,8 +57,12 @@ class Dataprocesser():
         :param df: pd.DataFrame
         raw dataset
         """
-        df.loc[:, self.imputation_cols] = pd.to_numeric(df[self.imputation_cols], errors='coerce')
-        df.loc[:, self.imputation_cols] = df[self.imputation_cols].fillna(value=np.mean(df[self.imputation_cols]))
+        df.loc[:, self.imputation_cols] = pd.to_numeric(
+            df[self.imputation_cols], errors="coerce"
+        )
+        df.loc[:, self.imputation_cols] = df[self.imputation_cols].fillna(
+            value=np.mean(df[self.imputation_cols])
+        )
         return df
 
     def convert_categorical_to_binary(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -51,7 +71,9 @@ class Dataprocesser():
         :param df: pd.DataFrame
         raw dataset
         """
-        df.loc[:, self.yes_no_cols] = df[self.yes_no_cols].stack().map(binary_dict).unstack()
+        df.loc[:, self.yes_no_cols] = (
+            df[self.yes_no_cols].stack().map(binary_dict).unstack()
+        )
         return df
 
     def convert_gender_to_binary(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -90,5 +112,3 @@ class Dataprocesser():
         featureset
         """
         df.to_csv(self.data_processed_path, index=False)
-
-

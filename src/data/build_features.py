@@ -1,7 +1,6 @@
 import logging
 
 from config import Config
-
 from src.data.dataprocessing import Dataprocesser
 from src.data.utils import request_raw_data_by_url
 
